@@ -29,7 +29,7 @@ RTAS_DEFS = RTAS_API
 
 AAX_DEFS = AAX_API
 
-APP_DEFS = SA_API __MACOSX_CORE__ WDL_NO_DEFINE_MINMAX//__UNIX_JACK__
+APP_DEFS = SA_API __MACOSX_CORE__ //__UNIX_JACK__
 
 IOS_DEFS = SA_API
 // Preprocessor definitions for all Debug builds
@@ -43,7 +43,7 @@ TRACER_DEFS = TRACER_BUILD NDEBUG
 
 // Preprocessor definitions for cocoa uniqueness (all builds)
 // If you want to use swell inside of iplug, you need to make SWELL_APP_PREFIX unique too
-COCOA_DEFS = SWELL_CLEANUP_ON_UNLOAD COCOA_PREFIX=vIPlugPlush SWELL_APP_PREFIX=Swell_vIPlugPlush
+COCOA_DEFS = COCOA_PREFIX=vIPlugPlush SWELL_APP_PREFIX=Swell_vIPlugPlush SWELL_FORCE_COCOA_TEXT
 
 //------------------------------
 // Release build options

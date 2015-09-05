@@ -448,49 +448,49 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 4FD40A8016792C5000B2C76C /* EEL.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = D2AAC046055464E500DB518D;
+			remoteGlobalIDString = D2AAC046055464E500DB518D /* libEEL.a */;
 			remoteInfo = libEEL;
 		};
 		4FD40A8916792C6F00B2C76C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 4FD40A8016792C5000B2C76C /* EEL.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = D2AAC045055464E500DB518D;
+			remoteGlobalIDString = D2AAC045055464E500DB518D /* libEEL */;
 			remoteInfo = libEEL;
 		};
 		4FD40A8B16792C7C00B2C76C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 4FD40A8016792C5000B2C76C /* EEL.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = D2AAC045055464E500DB518D;
+			remoteGlobalIDString = D2AAC045055464E500DB518D /* libEEL */;
 			remoteInfo = libEEL;
 		};
 		4FD40A8D16792C8400B2C76C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 4FD40A8016792C5000B2C76C /* EEL.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = D2AAC045055464E500DB518D;
+			remoteGlobalIDString = D2AAC045055464E500DB518D /* libEEL */;
 			remoteInfo = libEEL;
 		};
 		4FD40A8F16792C8C00B2C76C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 4FD40A8016792C5000B2C76C /* EEL.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = D2AAC045055464E500DB518D;
+			remoteGlobalIDString = D2AAC045055464E500DB518D /* libEEL */;
 			remoteInfo = libEEL;
 		};
 		4FD40A9116792C9300B2C76C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 4FD40A8016792C5000B2C76C /* EEL.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = D2AAC045055464E500DB518D;
+			remoteGlobalIDString = D2AAC045055464E500DB518D /* libEEL */;
 			remoteInfo = libEEL;
 		};
 		4FD40A9316792C9C00B2C76C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 4FD40A8016792C5000B2C76C /* EEL.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = D2AAC045055464E500DB518D;
+			remoteGlobalIDString = D2AAC045055464E500DB518D /* libEEL */;
 			remoteInfo = libEEL;
 		};
 /* End PBXContainerItemProxy section */
@@ -1304,7 +1304,7 @@
 			isa = PBXGroup;
 			children = (
 				4F8B6723158B4EB2002FC25B /* libAAXLibrary.a */,
-				4F8B6725158B4EB2002FC25B /* AAXLibrary_UnitTest */,
+				4F8B6725158B4EB2002FC25B /* AAXLibrary_ParameterManager_UnitTest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1637,7 +1637,6 @@
 		089C1669FE841209C02AAC07 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0620;
 				BuildIndependentTargetsInParallel = YES;
 			};
 			buildConfigurationList = 1DEB913E08733D840010E9CD /* Build configuration list for PBXProject "IPlugEEL" */;
@@ -1702,10 +1701,10 @@
 			remoteRef = 4F8B6722158B4EB2002FC25B /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		4F8B6725158B4EB2002FC25B /* AAXLibrary_UnitTest */ = {
+		4F8B6725158B4EB2002FC25B /* AAXLibrary_ParameterManager_UnitTest */ = {
 			isa = PBXReferenceProxy;
 			fileType = "compiled.mach-o.executable";
-			path = AAXLibrary_UnitTest;
+			path = AAXLibrary_ParameterManager_UnitTest;
 			remoteRef = 4F8B6724158B4EB2002FC25B /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
@@ -2176,7 +2175,6 @@
 				INSTALL_OWNER = root;
 				INSTALL_PATH = /;
 				LIBRARY_SEARCH_PATHS = "$(ADDITIONAL_LIBRARY_PATHS)";
-				MACOSX_DEPLOYMENT_TARGET = "$(DEPLOYMENT_TARGET)";
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CPLUSPLUSFLAGS = (
 					"$(OTHER_CFLAGS)",
@@ -2188,7 +2186,6 @@
 				SDKROOT = "$(BASE_SDK)";
 				SKIP_INSTALL = NO;
 				STRIP_INSTALLED_PRODUCT = NO;
-				SYMROOT = "build-mac";
 				VALID_ARCHS = "i386 x86_64";
 				WRAPPER_EXTENSION = "";
 			};
@@ -2226,7 +2223,6 @@
 				INSTALL_OWNER = root;
 				INSTALL_PATH = /;
 				LIBRARY_SEARCH_PATHS = "$(ADDITIONAL_LIBRARY_PATHS)";
-				MACOSX_DEPLOYMENT_TARGET = "$(DEPLOYMENT_TARGET)";
 				OTHER_CPLUSPLUSFLAGS = (
 					"$(OTHER_CFLAGS)",
 					"$(GCC_CFLAGS)",
@@ -2236,7 +2232,6 @@
 				PRODUCT_NAME = "$(BINARY_NAME)";
 				SDKROOT = "$(BASE_SDK)";
 				SKIP_INSTALL = NO;
-				SYMROOT = "build-mac";
 				VALID_ARCHS = "i386 x86_64";
 				WRAPPER_EXTENSION = "";
 			};
@@ -2252,7 +2247,6 @@
 				);
 				INFOPLIST_FILE = "resources/IPlugEEL-VST2-Info.plist";
 				SKIP_INSTALL = NO;
-				WARNING_CFLAGS = "-Wno-main";
 				WRAPPER_EXTENSION = vst;
 			};
 			name = Debug;
@@ -2267,7 +2261,6 @@
 				);
 				INFOPLIST_FILE = "resources/IPlugEEL-VST2-Info.plist";
 				SKIP_INSTALL = NO;
-				WARNING_CFLAGS = "-Wno-main";
 				WRAPPER_EXTENSION = vst;
 			};
 			name = Release;
@@ -2282,7 +2275,6 @@
 				);
 				INFOPLIST_FILE = "resources/IPlugEEL-VST2-Info.plist";
 				SKIP_INSTALL = NO;
-				WARNING_CFLAGS = "-Wno-main";
 				WRAPPER_EXTENSION = vst;
 			};
 			name = Tracer;
@@ -2412,10 +2404,9 @@
 				INFOPLIST_FILE = "resources/IPlugEEL-RTAS-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(ADDITIONAL_LIBRARY_PATHS)",
-					"\"$(SRCROOT)/../../PT9_SDK/MacBag/Libs/Release\"",
 					"\"$(SRCROOT)/../../PT9_SDK/MacBag/Libs/Debug\"",
+					"\"$(SRCROOT)/../../PT9_SDK/MacBag/Libs/Release\"",
 				);
-				MACOSX_DEPLOYMENT_TARGET = "$(DEPLOYMENT_TARGET)";
 				MacBag = "$(PT9_SDK)/MacBag";
 				OBJROOT = "build-mac";
 				OTHER_CFLAGS = "-fno-inline";
@@ -2466,7 +2457,6 @@
 					"\"$(SRCROOT)/../../PT9_SDK/MacBag/Libs/Release\"",
 					"\"$(SRCROOT)/../../PT9_SDK/MacBag/Libs/Debug\"",
 				);
-				MACOSX_DEPLOYMENT_TARGET = "$(DEPLOYMENT_TARGET)";
 				MacBag = "$(PT9_SDK)/MacBag";
 				OBJROOT = "build-mac";
 				OTHER_CFLAGS = "";
@@ -2512,7 +2502,6 @@
 					"\"$(SRCROOT)/../../PT9_SDK/MacBag/Libs/Release\"",
 					"\"$(SRCROOT)/../../PT9_SDK/MacBag/Libs/Debug\"",
 				);
-				MACOSX_DEPLOYMENT_TARGET = "$(DEPLOYMENT_TARGET)";
 				MacBag = "$(PT9_SDK)/MacBag";
 				OBJROOT = "build-mac";
 				OTHER_CFLAGS = "";
@@ -2611,21 +2600,16 @@
 					"$(IPLUG_PATH)",
 					"$(ADDITIONAL_INCLUDES)",
 					"$(inherited)",
-					"$(AAX_SDK)/Interfaces",
-					"$(AAX_SDK)/Interfaces/ACF",
 				);
 				INFOPLIST_FILE = "resources/IPlugEEL-AAX-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(ADDITIONAL_LIBRARY_PATHS)",
-					"$(AAX_SDK)/Libs/Debug",
+					"$(SRCROOT)/../../AAX_SDK/Libs/Debug",
 				);
-				MACOSX_DEPLOYMENT_TARGET = "$(DEPLOYMENT_TARGET)";
 				SDKROOT = "$(BASE_SDK)";
-				SKIP_INSTALL = NO;
 				WARNING_CFLAGS = (
 					"-Wno-four-char-constants",
 					"-Wno-unknown-pragmas",
-					"-Wno-incompatible-ms-struct",
 				);
 				WRAPPER_EXTENSION = aaxplugin;
 			};
@@ -2659,22 +2643,18 @@
 					"$(IPLUG_PATH)",
 					"$(ADDITIONAL_INCLUDES)",
 					"$(inherited)",
-					"$(AAX_SDK)/Interfaces",
-					"$(AAX_SDK)/Interfaces/ACF",
 				);
 				INFOPLIST_FILE = "resources/IPlugEEL-AAX-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(ADDITIONAL_LIBRARY_PATHS)",
-					"$(AAX_SDK)/Libs/Release",
+					"$(SRCROOT)/../../AAX_SDK/Libs/Release",
 				);
 				PREBINDING = YES;
-				MACOSX_DEPLOYMENT_TARGET = "$(DEPLOYMENT_TARGET)";
 				SDKROOT = "$(BASE_SDK)";
 				SKIP_INSTALL = NO;
 				WARNING_CFLAGS = (
 					"-Wno-four-char-constants",
 					"-Wno-unknown-pragmas",
-					"-Wno-incompatible-ms-struct",
 				);
 				WRAPPER_EXTENSION = aaxplugin;
 			};
@@ -2708,21 +2688,16 @@
 					"$(IPLUG_PATH)",
 					"$(ADDITIONAL_INCLUDES)",
 					"$(inherited)",
-					"$(AAX_SDK)/Interfaces",
-					"$(AAX_SDK)/Interfaces/ACF",
 				);
 				INFOPLIST_FILE = "resources/IPlugEEL-AAX-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(ADDITIONAL_LIBRARY_PATHS)",
-					"$(AAX_SDK)/Libs/Release",
+					"$(SRCROOT)/../../AAX_SDK/Libs/Release",
 				);
-				MACOSX_DEPLOYMENT_TARGET = "$(DEPLOYMENT_TARGET)";
 				SDKROOT = "$(BASE_SDK)";
-				SKIP_INSTALL = NO;
 				WARNING_CFLAGS = (
 					"-Wno-four-char-constants",
 					"-Wno-unknown-pragmas",
-					"-Wno-incompatible-ms-struct",
 				);
 				WRAPPER_EXTENSION = aaxplugin;
 			};
@@ -2832,7 +2807,6 @@
 				INSTALL_OWNER = root;
 				INSTALL_PATH = /;
 				LIBRARY_SEARCH_PATHS = "$(ADDITIONAL_LIBRARY_PATHS)";
-				MACOSX_DEPLOYMENT_TARGET = "$(DEPLOYMENT_TARGET)";
 				OTHER_CPLUSPLUSFLAGS = (
 					"$(OTHER_CFLAGS)",
 					"$(GCC_CFLAGS)",
@@ -2842,7 +2816,6 @@
 				PRODUCT_NAME = "$(BINARY_NAME)";
 				SDKROOT = "$(BASE_SDK)";
 				SKIP_INSTALL = NO;
-				SYMROOT = "build-mac";
 				VALID_ARCHS = "i386 x86_64";
 				WRAPPER_EXTENSION = "";
 			};

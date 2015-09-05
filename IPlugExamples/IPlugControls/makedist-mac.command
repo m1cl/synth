@@ -1,8 +1,10 @@
 #! /bin/sh
 
-#shell script to automate IPlug Project build, code-signing and packaging on OSX
-
 BASEDIR=$(dirname $0)
+
+# AAX codesigning requires ashelper tool in /usr/local/bin and aax.key/.crt in ./../../../Certificates/
+
+
 cd $BASEDIR
 
 #---------------------------------------------------------------------------------------------------------
@@ -20,54 +22,49 @@ BUG_FIX=$(($VERSION & 0x000000FF))
 
 FULL_VERSION=$MAJOR_VERSION"."$MINOR_VERSION"."$BUG_FIX
 
-PLUGIN_NAME=`echo | grep BUNDLE_NAME resource.h`
-PLUGIN_NAME=${PLUGIN_NAME//\#define BUNDLE_NAME }
-PLUGIN_NAME=${PLUGIN_NAME//\"}
-
-# work out the paths to the binaries
+# work out the paths to the bundles
 
 VST2=`echo | grep VST_FOLDER ../../common.xcconfig`
-VST2=${VST2//\VST_FOLDER = }/$PLUGIN_NAME.vst
+VST2=${VST2//\VST_FOLDER = }/IPlugControls.vst
 
 VST3=`echo | grep VST3_FOLDER ../../common.xcconfig`
-VST3=${VST3//\VST3_FOLDER = }/$PLUGIN_NAME.vst3
+VST3=${VST3//\VST3_FOLDER = }/IPlugControls.vst3
 
 AU=`echo | grep AU_FOLDER ../../common.xcconfig`
-AU=${AU//\AU_FOLDER = }/$PLUGIN_NAME.component
+AU=${AU//\AU_FOLDER = }/IPlugControls.component
 
 APP=`echo | grep APP_FOLDER ../../common.xcconfig`
-APP=${APP//\APP_FOLDER = }/$PLUGIN_NAME.app
+APP=${APP//\APP_FOLDER = }/IPlugControls.app
 
 # Dev build folder
 RTAS=`echo | grep RTAS_FOLDER ../../common.xcconfig`
-RTAS=${RTAS//\RTAS_FOLDER = }/$PLUGIN_NAME.dpm
-RTAS_FINAL="/Library/Application Support/Digidesign/Plug-Ins/$PLUGIN_NAME.dpm"
+RTAS=${RTAS//\RTAS_FOLDER = }/IPlugControls.dpm
+RTAS_FINAL="/Library/Application Support/Digidesign/Plug-Ins/IPlugControls.dpm"
 
 # Dev build folder
 AAX=`echo | grep AAX_FOLDER ../../common.xcconfig`
-AAX=${AAX//\AAX_FOLDER = }/$PLUGIN_NAME.aaxplugin
-AAX_FINAL="/Library/Application Support/Avid/Audio/Plug-Ins/$PLUGIN_NAME.aaxplugin"
+AAX=${AAX//\AAX_FOLDER = }/IPlugControls.aaxplugin
+AAX_FINAL="/Library/Application Support/Avid/Audio/Plug-Ins/IPlugControls.aaxplugin"
 
-PKG="installer/build-mac/$PLUGIN_NAME Installer.pkg"
-PKG_US="installer/build-mac/$PLUGIN_NAME Installer.unsigned.pkg"
+PKG='installer/build-mac/IPlugControls Installer.pkg'
+PKG_US='installer/build-mac/IPlugControls Installer.unsigned.pkg'
 
 CERT_ID=`echo | grep CERTIFICATE_ID ../../common.xcconfig`
 CERT_ID=${CERT_ID//\CERTIFICATE_ID = }
 
-echo "making $PLUGIN_NAME version $FULL_VERSION mac distribution..."
+echo "making IPlugControls version $FULL_VERSION mac distribution..."
 echo ""
 
 #---------------------------------------------------------------------------------------------------------
 
-#call python script to update version numbers
 ./update_version.py
 
-#here you can use the touch command to force xcode to rebuild
-#touch MyPlugin.h
+#could use touch to force a rebuild
+#touch blah.h
 
 #---------------------------------------------------------------------------------------------------------
 
-#if you are zipping the binaries, remove existing dist folder
+#remove existing dist folder
 #if [ -d installer/dist ] 
 #then
 #  rm -R installer/dist
@@ -119,7 +116,8 @@ fi
 #---------------------------------------------------------------------------------------------------------
 
 # build xcode project. Change target to build individual formats 
-xcodebuild -project $PLUGIN_NAME.xcodeproj -xcconfig $PLUGIN_NAME.xcconfig -target "All" -configuration Release 2> ./build-mac.log
+xcodebuild -project IPlugControls.xcodeproj -xcconfig IPlugControls.xcconfig -target "All" -configuration Release 2> ./build-mac.log
+#xcodebuild -project IPlugControls-ios.xcodeproj -xcconfig IPlugControls.xcconfig -target "IOSAPP" -configuration Release
 
 if [ -s build-mac.log ]
 then
@@ -136,82 +134,64 @@ fi
 #icon stuff - http://maxao.free.fr/telechargements/setfileicon.gz
 echo "setting icons"
 echo ""
-setfileicon resources/$PLUGIN_NAME.icns $AU
-setfileicon resources/$PLUGIN_NAME.icns $VST2
-setfileicon resources/$PLUGIN_NAME.icns $VST3
-setfileicon resources/$PLUGIN_NAME.icns "${RTAS}"
-setfileicon resources/$PLUGIN_NAME.icns "${AAX}"
-
-#---------------------------------------------------------------------------------------------------------
-
-#strip debug symbols from binaries
-
-echo "striping binaries"
-strip -x $AU/Contents/MacOS/$PLUGIN_NAME
-strip -x $VST2/Contents/MacOS/$PLUGIN_NAME
-strip -x $VST3/Contents/MacOS/$PLUGIN_NAME
-strip -x $APP/Contents/MacOS/$PLUGIN_NAME
-strip -x "${AAX}/Contents/MacOS/$PLUGIN_NAME"
-strip -x "${RTAS}/Contents/MacOS/$PLUGIN_NAME"
+setfileicon resources/IPlugControls.icns $AU
+setfileicon resources/IPlugControls.icns $VST2
+setfileicon resources/IPlugControls.icns $VST3
+setfileicon resources/IPlugControls.icns "${RTAS}"
+setfileicon resources/IPlugControls.icns "${AAX}"
 
 #---------------------------------------------------------------------------------------------------------
 
 #ProTools stuff
 
-echo "copying RTAS PLUGIN_NAME from 3PDev to main RTAS folder"
+echo "copying RTAS bundle from 3PDev to main RTAS folder"
 sudo cp -p -R "${RTAS}" "${RTAS_FINAL}"
 
-echo "copying AAX PLUGIN_NAME from 3PDev to main AAX folder"
+echo "copying AAX bundle from 3PDev to main AAX folder"
 sudo cp -p -R "${AAX}" "${AAX_FINAL}"
 
 echo "code sign AAX binary"
-#... consult PACE documentation
-
+sudo ashelper -f "${AAX_FINAL}/Contents/MacOS/IPlugControls" -l ../../../Certificates/aax.crt -k ../../../Certificates/aax.key -o "${AAX_FINAL}/Contents/MacOS/IPlugControls"
 #---------------------------------------------------------------------------------------------------------
 
-#Mac AppStore stuff
+#appstore stuff
 
-#xcodebuild -project $PLUGIN_NAME.xcodeproj -xcconfig $PLUGIN_NAME.xcconfig -target "APP" -configuration Release 2> ./build-mac.log
-
-#echo "code signing app for appstore"
-#echo ""
-#codesign -f -s "3rd Party Mac Developer Application: ""${CERT_ID}" $APP --entitlements resources/$PLUGIN_NAME.entitlements
- 
-#echo "building pkg for app store"
-#echo ""
-#productbuild \
-#     --component $APP /Applications \
-#     --sign "3rd Party Mac Developer Installer: ""${CERT_ID}" \
-#     --product "/Applications/$PLUGIN_NAME.app/Contents/Info.plist" installer/$PLUGIN_NAME.pkg
+# echo "code signing app for appstore"
+# echo ""
+# codesign -f -s "3rd Party Mac Developer Application: ""${CERT_ID}" $APP --entitlements resources/IPlugControls.entitlements
+#  
+# echo "building pkg for app store"
+# productbuild \
+#      --component $APP /Applications \
+#      --sign "3rd Party Mac Developer Installer: ""${CERT_ID}" \
+#      --product "/Applications/IPlugControls.app/Contents/Info.plist" installer/IPlugControls.pkg
 
 #---------------------------------------------------------------------------------------------------------
 
 #10.8 Gatekeeper/Developer ID stuff
 
-echo "code app binary for Gatekeeper on 10.8"
-echo ""
-codesign -f -s "Developer ID Application: ""${CERT_ID}" $APP
-
-#TODO: code-sign plug-in binaries too?
+#echo "code sign app for Gatekeeper on 10.8"
+#echo ""
+#codesign -f -s "Developer ID Application: ""${CERT_ID}" $APP
 
 #---------------------------------------------------------------------------------------------------------
 
 # installer, uses Packages http://s.sudre.free.fr/Software/Packages/about.html
-sudo sudo rm -R -f installer/$PLUGIN_NAME-mac.dmg
+sudo sudo rm -R -f installer/IPlugControls-mac.dmg
 
 echo "building installer"
 echo ""
-packagesbuild installer/$PLUGIN_NAME.pkgproj
+packagesbuild installer/IPlugControls.pkgproj
 
-echo "code-sign installer for Gatekeeper on 10.8"
-echo ""
-mv "${PKG}" "${PKG_US}"
-productsign --sign "Developer ID Installer: ""${CERT_ID}" "${PKG_US}" "${PKG}"
+#echo "code sign installer for Gatekeeper on 10.8"
+#echo ""
+#mv "${PKG}" "${PKG_US}"
+#productsign --sign "Developer ID Installer: ""${CERT_ID}" "${PKG_US}" "${PKG}"
                    
-rm -R -f "${PKG_US}"
+#rm -R -f "${PKG_US}"
 
 #set installer icon
-setfileicon resources/$PLUGIN_NAME.icns "${PKG}"
+setfileicon resources/IPlugControls.icns "${PKG}"
 
 #---------------------------------------------------------------------------------------------------------
 
@@ -220,19 +200,19 @@ setfileicon resources/$PLUGIN_NAME.icns "${PKG}"
 echo "building dmg"
 echo ""
 
-if [ -d installer/$PLUGIN_NAME.dmgCanvas ]
+if [ -d installer/IPlugControls.dmgCanvas ]
 then
-  dmgcanvas installer/$PLUGIN_NAME.dmgCanvas installer/$PLUGIN_NAME-mac.dmg
+  dmgcanvas installer/IPlugControls.dmgCanvas installer/IPlugControls-mac.dmg
 else
-  hdiutil create installer/$PLUGIN_NAME.dmg -srcfolder installer/build-mac/ -ov -anyowners -volname $PLUGIN_NAME
+  hdiutil create installer/IPlugControls.dmg -srcfolder installer/build-mac/ -ov -anyowners -volname IPlugControls
   
-  if [ -f installer/$PLUGIN_NAME-mac.dmg ]
+  if [ -f installer/IPlugControls-mac.dmg ]
   then
-   rm -f installer/$PLUGIN_NAME-mac.dmg
+   rm -f installer/IPlugControls-mac.dmg
   fi
   
-  hdiutil convert installer/$PLUGIN_NAME.dmg -format UDZO -o installer/$PLUGIN_NAME-mac.dmg
-  sudo rm -R -f installer/$PLUGIN_NAME.dmg
+  hdiutil convert installer/IPlugControls.dmg -format UDZO -o installer/IPlugControls-mac.dmg
+  sudo rm -R -f installer/IPlugControls.dmg
 fi
 
 sudo rm -R -f installer/build-mac/
@@ -242,16 +222,16 @@ sudo rm -R -f installer/build-mac/
 
 # echo "copying binaries..."
 # echo ""
-# cp -R $AU installer/dist/$PLUGIN_NAME.component
-# cp -R $VST2 installer/dist/$PLUGIN_NAME.vst
-# cp -R $VST3 installer/dist/$PLUGIN_NAME.vst3
-# cp -R $RTAS installer/dist/$PLUGIN_NAME.dpm
-# cp -R $AAX installer/dist/$PLUGIN_NAME.aaxplugin
-# cp -R $APP installer/dist/$PLUGIN_NAME.app
+# cp -R $AU installer/dist/IPlugControls.component
+# cp -R $VST2 installer/dist/IPlugControls.vst
+# cp -R $VST3 installer/dist/IPlugControls.vst3
+# cp -R $RTAS installer/dist/IPlugControls.dpm
+# cp -R $AAX installer/dist/IPlugControls.aaxplugin
+# cp -R $APP installer/dist/IPlugControls.app
 # 
 # echo "zipping binaries..."
 # echo ""
-# ditto -c -k installer/dist installer/$PLUGIN_NAME-mac.zip
+# ditto -c -k installer/dist installer/IPlugControls-mac.zip
 # rm -R installer/dist
 
 #---------------------------------------------------------------------------------------------------------

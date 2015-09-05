@@ -44,9 +44,6 @@ public:
 
 class PresetFunctionsMenu : public IPanelControl
 {
-private:
-  WDL_String mPreviousPath;
-  
 public:
   PresetFunctionsMenu(IPlugBase *pPlug, IRECT pR)
     : IPanelControl(pPlug, pR, &COLOR_BLUE)
@@ -94,28 +91,23 @@ public:
     if(gui->CreateIPopupMenu(&menu, &mRECT))
     {
       int itemChosen = menu.GetChosenItemIdx();
-      WDL_String fileName;
 
       //printf("chosen %i /n", itemChosen);
       switch (itemChosen)
       {
         case 0: //Save Program
-          fileName.Set(mPlug->GetPresetName(mPlug->GetCurrentPresetIdx()));
-          GetGUI()->PromptForFile(&fileName, kFileSave, &mPreviousPath, "fxp");
-          mPlug->SaveProgramAsFXP(&fileName);
+          char disp[MAX_PRESET_NAME_LEN];
+          strcpy(disp, mPlug->GetPresetName(mPlug->GetCurrentPresetIdx()));
+          mPlug->SaveProgramAsFXP(disp);
           break;
         case 1: //Save Bank
-          fileName.Set("IPlugChunksBank");
-          GetGUI()->PromptForFile(&fileName, kFileSave, &mPreviousPath, "fxb");
-          mPlug->SaveBankAsFXB(&fileName);
+          mPlug->SaveBankAsFXB("IPlugChunks Bank");
           break;
         case 3: //Load Preset
-          GetGUI()->PromptForFile(&fileName, kFileOpen, &mPreviousPath, "fxp");
-          mPlug->LoadProgramFromFXP(&fileName);
+          mPlug->LoadProgramFromFXP();
           break;
         case 4: // Load Bank
-          GetGUI()->PromptForFile(&fileName, kFileOpen, &mPreviousPath, "fxb");
-          mPlug->LoadBankFromFXB(&fileName);
+          mPlug->LoadBankFromFXB();
           break;
         default:
           break;

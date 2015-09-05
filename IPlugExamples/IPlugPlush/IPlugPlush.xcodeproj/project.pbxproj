@@ -1312,7 +1312,7 @@
 			isa = PBXGroup;
 			children = (
 				4F8B6723158B4EB2002FC25B /* libAAXLibrary.a */,
-				4F8B6725158B4EB2002FC25B /* AAXLibrary_UnitTest */,
+				4F8B6725158B4EB2002FC25B /* AAXLibrary_ParameterManager_UnitTest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1636,7 +1636,6 @@
 		089C1669FE841209C02AAC07 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0620;
 				BuildIndependentTargetsInParallel = YES;
 			};
 			buildConfigurationList = 1DEB913E08733D840010E9CD /* Build configuration list for PBXProject "IPlugPlush" */;
@@ -1697,10 +1696,10 @@
 			remoteRef = 4F8B6722158B4EB2002FC25B /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		4F8B6725158B4EB2002FC25B /* AAXLibrary_UnitTest */ = {
+		4F8B6725158B4EB2002FC25B /* AAXLibrary_ParameterManager_UnitTest */ = {
 			isa = PBXReferenceProxy;
 			fileType = "compiled.mach-o.executable";
-			path = AAXLibrary_UnitTest;
+			path = AAXLibrary_ParameterManager_UnitTest;
 			remoteRef = 4F8B6724158B4EB2002FC25B /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
@@ -2182,7 +2181,6 @@
 				INSTALL_OWNER = root;
 				INSTALL_PATH = /;
 				LIBRARY_SEARCH_PATHS = "$(ADDITIONAL_LIBRARY_PATHS)";
-				MACOSX_DEPLOYMENT_TARGET = "$(DEPLOYMENT_TARGET)";
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CPLUSPLUSFLAGS = (
 					"$(OTHER_CFLAGS)",
@@ -2191,7 +2189,6 @@
 				PREBINDING = NO;
 				PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR = NO;
 				PRODUCT_NAME = "$(BINARY_NAME)";
-				SYMROOT = "build-mac";
 				SDKROOT = "$(BASE_SDK)";
 				SKIP_INSTALL = NO;
 				STRIP_INSTALLED_PRODUCT = NO;
@@ -2232,7 +2229,6 @@
 				INSTALL_OWNER = root;
 				INSTALL_PATH = /;
 				LIBRARY_SEARCH_PATHS = "$(ADDITIONAL_LIBRARY_PATHS)";
-				MACOSX_DEPLOYMENT_TARGET = "$(DEPLOYMENT_TARGET)";
 				OTHER_CPLUSPLUSFLAGS = (
 					"$(OTHER_CFLAGS)",
 					"$(GCC_CFLAGS)",
@@ -2240,7 +2236,6 @@
 				PREBINDING = NO;
 				PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR = NO;
 				PRODUCT_NAME = "$(BINARY_NAME)";
-				SYMROOT = "build-mac";
 				SDKROOT = "$(BASE_SDK)";
 				SKIP_INSTALL = NO;
 				VALID_ARCHS = "i386 x86_64";
@@ -2258,7 +2253,6 @@
 				);
 				INFOPLIST_FILE = "resources/IPlugPlush-VST2-Info.plist";
 				SKIP_INSTALL = NO;
-				WARNING_CFLAGS = "-Wno-main";
 				WRAPPER_EXTENSION = vst;
 			};
 			name = Debug;
@@ -2273,7 +2267,6 @@
 				);
 				INFOPLIST_FILE = "resources/IPlugPlush-VST2-Info.plist";
 				SKIP_INSTALL = NO;
-				WARNING_CFLAGS = "-Wno-main";
 				WRAPPER_EXTENSION = vst;
 			};
 			name = Release;
@@ -2288,7 +2281,6 @@
 				);
 				INFOPLIST_FILE = "resources/IPlugPlush-VST2-Info.plist";
 				SKIP_INSTALL = NO;
-				WARNING_CFLAGS = "-Wno-main";
 				WRAPPER_EXTENSION = vst;
 			};
 			name = Tracer;
@@ -2418,10 +2410,9 @@
 				INFOPLIST_FILE = "resources/IPlugPlush-RTAS-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(ADDITIONAL_LIBRARY_PATHS)",
-					"\"$(SRCROOT)/../../PT9_SDK/MacBag/Libs/Release\"",
 					"\"$(SRCROOT)/../../PT9_SDK/MacBag/Libs/Debug\"",
+					"\"$(SRCROOT)/../../PT9_SDK/MacBag/Libs/Release\"",
 				);
-				MACOSX_DEPLOYMENT_TARGET = "$(DEPLOYMENT_TARGET)";
 				MacBag = "$(PT9_SDK)/MacBag";
 				OBJROOT = "build-mac";
 				OTHER_CFLAGS = "-fno-inline";
@@ -2472,7 +2463,6 @@
 					"\"$(SRCROOT)/../../PT9_SDK/MacBag/Libs/Release\"",
 					"\"$(SRCROOT)/../../PT9_SDK/MacBag/Libs/Debug\"",
 				);
-				MACOSX_DEPLOYMENT_TARGET = "$(DEPLOYMENT_TARGET)";
 				MacBag = "$(PT9_SDK)/MacBag";
 				OBJROOT = "build-mac";
 				OTHER_CFLAGS = "";
@@ -2518,7 +2508,6 @@
 					"\"$(SRCROOT)/../../PT9_SDK/MacBag/Libs/Release\"",
 					"\"$(SRCROOT)/../../PT9_SDK/MacBag/Libs/Debug\"",
 				);
-				MACOSX_DEPLOYMENT_TARGET = "$(DEPLOYMENT_TARGET)";
 				MacBag = "$(PT9_SDK)/MacBag";
 				OBJROOT = "build-mac";
 				OTHER_CFLAGS = "";
@@ -2617,21 +2606,16 @@
 					"$(IPLUG_PATH)",
 					"$(ADDITIONAL_INCLUDES)",
 					"$(inherited)",
-					"$(AAX_SDK)/Interfaces",
-					"$(AAX_SDK)/Interfaces/ACF",
 				);
 				INFOPLIST_FILE = "resources/IPlugPlush-AAX-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(ADDITIONAL_LIBRARY_PATHS)",
-					"$(AAX_SDK)/Libs/Debug",
+					"$(SRCROOT)/../../AAX_SDK/Libs/Debug",
 				);
-				MACOSX_DEPLOYMENT_TARGET = "$(DEPLOYMENT_TARGET)";
 				SDKROOT = "$(BASE_SDK)";
-				SKIP_INSTALL = NO;
 				WARNING_CFLAGS = (
 					"-Wno-four-char-constants",
 					"-Wno-unknown-pragmas",
-					"-Wno-incompatible-ms-struct",
 				);
 				WRAPPER_EXTENSION = aaxplugin;
 			};
@@ -2665,22 +2649,18 @@
 					"$(IPLUG_PATH)",
 					"$(ADDITIONAL_INCLUDES)",
 					"$(inherited)",
-					"$(AAX_SDK)/Interfaces",
-					"$(AAX_SDK)/Interfaces/ACF",
 				);
 				INFOPLIST_FILE = "resources/IPlugPlush-AAX-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(ADDITIONAL_LIBRARY_PATHS)",
-					"$(AAX_SDK)/Libs/Release",
+					"$(SRCROOT)/../../AAX_SDK/Libs/Release",
 				);
 				PREBINDING = YES;
-				MACOSX_DEPLOYMENT_TARGET = "$(DEPLOYMENT_TARGET)";
 				SDKROOT = "$(BASE_SDK)";
 				SKIP_INSTALL = NO;
 				WARNING_CFLAGS = (
 					"-Wno-four-char-constants",
 					"-Wno-unknown-pragmas",
-					"-Wno-incompatible-ms-struct",
 				);
 				WRAPPER_EXTENSION = aaxplugin;
 			};
@@ -2714,21 +2694,16 @@
 					"$(IPLUG_PATH)",
 					"$(ADDITIONAL_INCLUDES)",
 					"$(inherited)",
-					"$(AAX_SDK)/Interfaces",
-					"$(AAX_SDK)/Interfaces/ACF",
 				);
 				INFOPLIST_FILE = "resources/IPlugPlush-AAX-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(ADDITIONAL_LIBRARY_PATHS)",
-					"$(AAX_SDK)/Libs/Release",
+					"$(SRCROOT)/../../AAX_SDK/Libs/Release",
 				);
-				MACOSX_DEPLOYMENT_TARGET = "$(DEPLOYMENT_TARGET)";
 				SDKROOT = "$(BASE_SDK)";
-				SKIP_INSTALL = NO;
 				WARNING_CFLAGS = (
 					"-Wno-four-char-constants",
 					"-Wno-unknown-pragmas",
-					"-Wno-incompatible-ms-struct",
 				);
 				WRAPPER_EXTENSION = aaxplugin;
 			};
@@ -2838,7 +2813,6 @@
 				INSTALL_OWNER = root;
 				INSTALL_PATH = /;
 				LIBRARY_SEARCH_PATHS = "$(ADDITIONAL_LIBRARY_PATHS)";
-				MACOSX_DEPLOYMENT_TARGET = "$(DEPLOYMENT_TARGET)";
 				OTHER_CPLUSPLUSFLAGS = (
 					"$(OTHER_CFLAGS)",
 					"$(GCC_CFLAGS)",
@@ -2846,7 +2820,6 @@
 				PREBINDING = NO;
 				PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR = NO;
 				PRODUCT_NAME = "$(BINARY_NAME)";
-				SYMROOT = "build-mac";
 				SDKROOT = "$(BASE_SDK)";
 				SKIP_INSTALL = NO;
 				VALID_ARCHS = "i386 x86_64";

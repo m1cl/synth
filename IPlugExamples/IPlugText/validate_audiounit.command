@@ -6,20 +6,6 @@ BASEDIR=$(dirname $0)
 
 cd $BASEDIR
 
-OS_VERSION=`sw_vers -productVersion | egrep -o '10\.[0-9]+'`
-
-x86_ARGS=""
-x64_ARGS=""
-
-if [[ $OS_VERSION == "10.9" ]] || [[ $OS_VERSION == "10.10" ]]
-then
-  x86_ARGS="-32"
-  x64_ARGS=""
-else
-  x86_ARGS=""
-  x64_ARGS="-64"
-fi
-
 PUID=`echo | grep PLUG_UNIQUE_ID resource.h`
 PUID=${PUID//\#define PLUG_UNIQUE_ID }
 PUID=${PUID//\'}
@@ -33,6 +19,9 @@ PII=${PII//\#define PLUG_IS_INST }
 
 PDM=`echo | grep PLUG_DOES_MIDI resource.h`
 PDM=${PDM//\#define PLUG_DOES_MIDI }
+
+echo $PII
+echo $PDM
 
 TYPE=aufx
 
@@ -55,7 +44,7 @@ then
 	export MallocStackLogging=1
 	set env MallocStackLoggingNoCompact=1
 
-	auval $x86_ARGS -v $TYPE $PUID $PMID -w -q
+	auval -v $TYPE $PUID $PMID -w -q
 	
 	unset MallocStackLogging
 
@@ -68,7 +57,7 @@ else
 	echo "--------------------------------------------------"
 	echo "--------------------------------------------------"
 	
-	auval $x86_ARGS -v $TYPE $PUID $PMID
+	auval -v $TYPE $PUID $PMID
 	
 	echo "\nvalidating i386 64 bit... ------------------------"
 	echo "--------------------------------------------------"
@@ -77,8 +66,19 @@ else
 	echo "--------------------------------------------------"
 	echo "--------------------------------------------------"
 	
-	auval $x64_ARGS -v $TYPE $PUID $PMID
-
+	auval -64 -v $TYPE $PUID $PMID
+	
+	#[ -e "/var/db/receipts/com.apple.pkg.Rosetta.plist" ] && echo Rosetta installed || echo Rosetta NOT installed
+	#ppc auval not available on 10.6 
+	
+	#echo "\nvalidating ppc 32 bit... -------------------------"
+	#echo "--------------------------------------------------"
+	#echo "--------------------------------------------------"
+	#echo "--------------------------------------------------"
+	#echo "--------------------------------------------------"
+	#echo "--------------------------------------------------"
+	
+	#auval -ppc -v $TYPE $PUID $PMID
 fi
 
 echo "done"
